@@ -22,7 +22,7 @@ namespace Multisig
             }
             catch (Exception exception)
             {
-                Console.WriteLine("error:" + exception.Message);
+                Console.WriteLine("error : " + exception.Message);
                 Console.ReadLine();
             }
         }
