@@ -7,6 +7,7 @@ namespace Multisig
     {
         static void Main(string[] args)
         {
+            
             // Generates a multi-signed transaction 
             // and transfer amount to a 3rd account,  if signed correctly
             Wallet wallet = new Wallet();

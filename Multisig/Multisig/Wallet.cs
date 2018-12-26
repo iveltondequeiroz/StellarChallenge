@@ -8,12 +8,12 @@ namespace Multisig
 {
     class Wallet
     {
-        private static string HorizonUrl = "https://horizon-testnet.stellar.org";
-        private static string masterAccountId = "GAV3PAFSQMAUZWWCWA6HQOIIQ3RSHSOGLLGXMQ3TDXKRVMGKSATSR5IY";
-        private static string masterSecret = "SA4UNSKZ2R3K743F4QE2QT4RBNTTVB6YOVRRJRLUNGNQBUCWUGHTENIL";
-        private static string signerAccountId = "GDTC4V62FV3FTXPBUQQQZ66WD43UIPYXCY4JH2WJYKNGDSASCLJ4EFRQ";
-        private static string signerSecret = "SA47CHHU2C2N727UEWINYE7TCXDHKVJMZDML5I26AMFEJ5QO4LSUATLZ";
-        private static string destinationAccountId = "GDQDDVIQ3IDX3STTCWUDZTOBOLMNL4MS2PE67SCKJNA6QFRGJLAS7J4Q";
+        private readonly string HorizonUrl = "https://horizon-testnet.stellar.org";
+        private readonly string masterAccountId = "GAV3PAFSQMAUZWWCWA6HQOIIQ3RSHSOGLLGXMQ3TDXKRVMGKSATSR5IY";
+        private readonly string masterSecret = "SA4UNSKZ2R3K743F4QE2QT4RBNTTVB6YOVRRJRLUNGNQBUCWUGHTENIL";
+        private readonly string signerAccountId = "GDTC4V62FV3FTXPBUQQQZ66WD43UIPYXCY4JH2WJYKNGDSASCLJ4EFRQ";
+        private readonly string signerSecret = "SA47CHHU2C2N727UEWINYE7TCXDHKVJMZDML5I26AMFEJ5QO4LSUATLZ";
+        private readonly string destinationAccountId = "GDQDDVIQ3IDX3STTCWUDZTOBOLMNL4MS2PE67SCKJNA6QFRGJLAS7J4Q";
 
 
         // Generates a multi-signed transaction 
