@@ -4,5 +4,6 @@ Generates a multi-signed transaction and transfer the amount to a 3rd account, i
            
 API: Horizon
 using C# Stellar-dotnet-sdk https://github.com/elucidsoft/dotnet-stellar-sdk
-.NET Core Console application, Run the project on Visual Studio 2017
+- .NET Core Console application
+- Run the project on Visual Studio 2017
 
