@@ -8,13 +8,7 @@ namespace Multisig
         static void Main(string[] args)
         {
 
-            //Integration integration = new Integration();
-            //integration.ListenForDeposits();
-            //Console.Read();
-
-
-            // Generates a multi-signed transaction 
-            // and transfer amount to a 3rd account,  if signed correctly
+            // Generates a multi-signed transaction and transfer amount to a 3rd account,  if signed correctly
             Wallet wallet = new Wallet();
             try
             {
