@@ -6,4 +6,4 @@ API: Horizon
 using C# Stellar-dotnet-sdk https://github.com/elucidsoft/dotnet-stellar-sdk
 - .NET Core Console application
 - Run the project on Visual Studio 2017
-
+- Architecture documentation : Stellar Integration.docx  on Docs folder
