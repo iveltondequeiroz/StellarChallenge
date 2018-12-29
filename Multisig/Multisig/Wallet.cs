@@ -3,21 +3,33 @@ using stellar_dotnet_sdk;
 using stellar_dotnet_sdk.responses;
 using System.Threading.Tasks;
 
-    
+        
 namespace Multisig
 {
     class Wallet
     {
-        private readonly string HorizonUrl = "https://horizon-testnet.stellar.org";
-        private readonly string masterAccountId = "GAV3PAFSQMAUZWWCWA6HQOIIQ3RSHSOGLLGXMQ3TDXKRVMGKSATSR5IY";
-        private readonly string masterSecret = "SA4UNSKZ2R3K743F4QE2QT4RBNTTVB6YOVRRJRLUNGNQBUCWUGHTENIL";
-        private readonly string signerAccountId = "GDTC4V62FV3FTXPBUQQQZ66WD43UIPYXCY4JH2WJYKNGDSASCLJ4EFRQ";
-        private readonly string signerSecret = "SA47CHHU2C2N727UEWINYE7TCXDHKVJMZDML5I26AMFEJ5QO4LSUATLZ";
-        private readonly string destinationAccountId = "GDQDDVIQ3IDX3STTCWUDZTOBOLMNL4MS2PE67SCKJNA6QFRGJLAS7J4Q";
+        private string HorizonUrl { get; set; }
+        private string MasterAccount { get; set; }
+        private string MasterSecret { get; set; }
+        private string SignerAccount { get; set; }
+        private string SignerSecret { get; set; }
+        private string DestinationAccount { get; set; }
+        private string AmountToTransfer { get; set; }
 
 
-        // Generates a multi-signed transaction 
-        // and transfer amount to a 3rd account,  if signed correctly
+        public Wallet(string master, string masterSecret, string signer, string signerSecret, string destination, string url, string amount)
+        {
+            MasterAccount = master;
+            MasterSecret = masterSecret;
+            SignerAccount = signer;
+            SignerSecret = signerSecret;
+            DestinationAccount = destination;
+            HorizonUrl = url;
+            AmountToTransfer = amount;
+        }
+
+        /// Generates a multi-signed transaction       
+        /// and transfer amount to a 3rd account, if signed correctly
         public async Task MultiSigTransfer()
         {
             // Horizon settings
@@ -26,26 +38,22 @@ namespace Multisig
 
             // master account
             Console.WriteLine("Generating key pairs...");
-            KeyPair masterKeyPair = KeyPair.FromSecretSeed(masterSecret);
+            KeyPair masterKeyPair = KeyPair.FromSecretSeed(MasterSecret);
             AccountResponse masterAccountResponse = await server.Accounts.Account(masterKeyPair);
             Account masterAccount = new Account(masterAccountResponse.KeyPair, masterAccountResponse.SequenceNumber);
 
-            // signer account
-            KeyPair signerKeyPair = KeyPair.FromAccountId(signerAccountId);
+            // generating keypairs
+            KeyPair signerKeyPair = KeyPair.FromAccountId(SignerAccount);
+            KeyPair signerSecretKeyPair = KeyPair.FromSecretSeed(SignerSecret); ;
+            KeyPair destinationKeyPair = KeyPair.FromAccountId(DestinationAccount);
             var signerKey = stellar_dotnet_sdk.Signer.Ed25519PublicKey(signerKeyPair);
-            KeyPair signerSecretKeyPair = KeyPair.FromSecretSeed(signerSecret); ;
-
-            // destination account
-            KeyPair destinationKeyPair = KeyPair.FromAccountId(destinationAccountId);
-
+            
             // set signer operation
             SetOptionsOperation signerOperation = new SetOptionsOperation.Builder().SetSigner(signerKey, 1).Build();
 
             // set flag
+            // for clearing flags -> SetOptionsOperation flagOperation = new SetOptionsOperation.Builder().SetClearFlags(1).Build();
             SetOptionsOperation flagOperation = new SetOptionsOperation.Builder().SetSetFlags(1).Build();
-
-            // for clearing flags
-            // SetOptionsOperation flagOperation = new SetOptionsOperation.Builder().SetClearFlags(1).Build();
 
             // set medium threshold
             SetOptionsOperation thresholdOperation = new SetOptionsOperation.Builder().SetMediumThreshold(2).Build();
@@ -74,9 +82,9 @@ namespace Multisig
                 await server.SubmitTransaction(transaction);
                 Console.WriteLine("Success!");
 
-                await this.GetBalance(masterAccountId);
-                await this.GetBalance(signerAccountId);
-                await this.GetBalance(destinationAccountId);
+                await this.GetBalance(MasterAccount);
+                await this.GetBalance(SignerAccount);
+                await this.GetBalance(DestinationAccount);
             }
             catch (Exception exception)
             {
